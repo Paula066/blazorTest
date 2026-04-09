@@ -1,6 +1,5 @@
 obj/
 bin/
-output/
 *.user
 *.suo
 .vs/
@@ -14,4 +13,3 @@ output/
 
 # Vercel
 .vercel
-.vercel.json

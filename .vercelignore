@@ -1,0 +1,17 @@
+bin/
+obj/
+.git/
+.github/
+.vs/
+.vscode/
+*.csproj
+*.cs
+*.razor
+*.md
+Pages/
+Shared/
+Components/
+Properties/
+_Imports.razor
+App.razor
+Program.cs
