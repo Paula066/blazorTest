@@ -14,3 +14,4 @@ output/
 
 # Vercel
 .vercel
+.vercel.json
