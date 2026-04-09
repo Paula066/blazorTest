@@ -1,0 +1,36 @@
+@* Komponent karty z możliwością dostosowania *@
+
+<div class="card @CssClass" style="@Style">
+    @if (!string.IsNullOrEmpty(Title))
+    {
+        <div class="card-header">
+            <h5 class="card-title mb-0">@Title</h5>
+        </div>
+    }
+    <div class="card-body">
+        @ChildContent
+    </div>
+    @if (!string.IsNullOrEmpty(Footer))
+    {
+        <div class="card-footer text-muted">
+            @Footer
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Footer { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; } = "";
+
+    [Parameter]
+    public string Style { get; set; } = "";
+}

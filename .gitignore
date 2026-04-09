@@ -1,0 +1,16 @@
+obj/
+bin/
+output/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.log
+
+# Vercel
+.vercel

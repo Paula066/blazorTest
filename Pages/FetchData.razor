@@ -1,0 +1,62 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Prognoza pogody</PageTitle>
+
+<h1>Prognoza pogody</h1>
+
+<p>Ten komponent pokazuje jak pobierać dane z API (w tym przypadku z lokalnego pliku JSON).</p>
+
+@if (forecasts == null)
+{
+    <p><em>Ładowanie danych...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Opis</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC°C</td>
+                    <td>@forecast.TemperatureF°F</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <div class="alert alert-info mt-3">
+        <strong>Wskazówka:</strong> W prawdziwej aplikacji możesz zamienić 
+        <code>sample-data/weather.json</code> na URL zewnętrznego API.
+    </div>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}

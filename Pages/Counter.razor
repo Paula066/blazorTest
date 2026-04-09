@@ -1,0 +1,33 @@
+﻿@page "/counter"
+
+<PageTitle>Licznik</PageTitle>
+
+<h1>Licznik</h1>
+
+<p role="status">Aktualna wartość: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Kliknij mnie</button>
+<button class="btn btn-secondary" @onclick="ResetCount">Resetuj</button>
+
+<div class="mt-3">
+    @if (currentCount > 10)
+    {
+        <div class="alert alert-success">
+            Wow! Przekroczyłeś 10 kliknięć! 🎉
+        </div>
+    }
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private void ResetCount()
+    {
+        currentCount = 0;
+    }
+}

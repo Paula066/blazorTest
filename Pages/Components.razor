@@ -1,0 +1,79 @@
+@page "/komponenty"
+@using ElevatoBlazorApp.Components
+
+<PageTitle>Przykładowe komponenty</PageTitle>
+
+<h1>Przykładowe komponenty</h1>
+
+<p>Ta strona pokazuje jak tworzyć i używać wielokrotnych komponentów w Blazor.</p>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <Card Title="Podstawowa karta" Footer="Footer karty">
+            <p>To jest zawartość karty. Możesz tutaj umieścić dowolny content!</p>
+        </Card>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <Card Title="Karta sukcesu" CssClass="border-success">
+            <div class="text-success">
+                <h5>✅ Sukces!</h5>
+                <p>Operacja zakończona pomyślnie.</p>
+            </div>
+        </Card>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <Card Title="Karta niebieska" CssClass="bg-primary text-white">
+            <p>Karta z niestandardowym kolorem tła.</p>
+            <button class="btn btn-light btn-sm">Akcja</button>
+        </Card>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <Card Title="Interaktywny komponent">
+            <p>Aktualny czas: <strong>@currentTime.ToString("HH:mm:ss")</strong></p>
+            <button class="btn btn-primary" @onclick="UpdateTime">Odśwież czas</button>
+        </Card>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <Card Title="Formularz">
+            <div class="mb-3">
+                <label class="form-label">Twoje imię:</label>
+                <input type="text" class="form-control" @bind="userName" @bind:event="oninput" />
+            </div>
+            @if (!string.IsNullOrEmpty(userName))
+            {
+                <div class="alert alert-info">
+                    Witaj, <strong>@userName</strong>! 👋
+                </div>
+            }
+        </Card>
+    </div>
+</div>
+
+<div class="mt-4">
+    <Card Title="💡 Wskazówka" CssClass="border-info">
+        <p>Komponent <code>Card.razor</code> znajduje się w folderze <code>Components/</code>.</p>
+        <p>Możesz tworzyć własne komponenty, aby ponownie używać kodu w całej aplikacji!</p>
+        <h6 class="mt-3">Jak używać:</h6>
+        <pre><code>@@using ElevatoBlazorApp.Components
+
+&lt;Card Title="Moja karta"&gt;
+    &lt;p&gt;Zawartość karty&lt;/p&gt;
+&lt;/Card&gt;</code></pre>
+    </Card>
+</div>
+
+@code {
+    private DateTime currentTime = DateTime.Now;
+    private string userName = "";
+
+    private void UpdateTime()
+    {
+        currentTime = DateTime.Now;
+    }
+}
