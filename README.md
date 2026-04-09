@@ -2,7 +2,8 @@
 
 Aplikacja Blazor WebAssembly gotowa do wdrożenia na Vercel.
 
-> **⚠️ WAŻNE:** Jeśli masz problemy z deployment na Vercel (404 error), zobacz: **[FIX_VERCEL.md](FIX_VERCEL.md)**
+> **🚀 AUTOMATYCZNY DEPLOYMENT:** Push do `main` automatycznie wdraża na Vercel!  
+> **⚙️ Setup:** Zobacz [GITHUB_SECRETS.md](GITHUB_SECRETS.md) - konfiguracja zajmie 5 minut
 
 ## 🚀 Cechy
 
