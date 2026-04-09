@@ -1,0 +1,35 @@
+@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@namespace ElevatoBlazorApp.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elevato - Blazor Server</title>
+    <base href="~/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="ElevatoBlazorApp.styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            Wystapil blad. Aplikacja moze nie dzialac poprawnie do czasu przeladowania.
+        </environment>
+        <environment include="Development">
+            Wystapil nieobsluzony wyjatek. Zobacz szczegoly w konsoli przegladarki.
+        </environment>
+        <a href="" class="reload">Przeladuj</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

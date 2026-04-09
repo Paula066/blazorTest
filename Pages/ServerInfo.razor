@@ -1,0 +1,100 @@
+@page "/serverinfo"
+
+<PageTitle>Informacje o serwerze</PageTitle>
+
+<h1>Informacje o serwerze</h1>
+
+<p>Ta strona pokazuje dane dostepne <strong>tylko w Blazor Server</strong> - nie w Blazor WASM!</p>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Srodowisko</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr><td><strong>OS</strong></td><td>@System.Runtime.InteropServices.RuntimeInformation.OSDescription</td></tr>
+                    <tr><td><strong>.NET</strong></td><td>@System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</td></tr>
+                    <tr><td><strong>Nazwa hosta</strong></td><td>@Environment.MachineName</td></tr>
+                    <tr><td><strong>Procesory</strong></td><td>@Environment.ProcessorCount</td></tr>
+                    <tr><td><strong>Katalog roboczy</strong></td><td>@Environment.CurrentDirectory</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Czas serwera (live)</h5>
+            </div>
+            <div class="card-body text-center">
+                <h2>@currentTime.ToString("HH:mm:ss")</h2>
+                <p class="text-muted">@currentTime.ToString("dddd, d MMMM yyyy", new System.Globalization.CultureInfo("pl-PL"))</p>
+                <p><small>Odswiezane co sekunde z serwera</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Pamiec</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr><td><strong>Uzycie pamieci</strong></td><td>@((GC.GetTotalMemory(false) / 1024.0 / 1024.0).ToString("F2")) MB</td></tr>
+                    <tr><td><strong>GC Gen 0</strong></td><td>@GC.CollectionCount(0)</td></tr>
+                    <tr><td><strong>GC Gen 1</strong></td><td>@GC.CollectionCount(1)</td></tr>
+                    <tr><td><strong>GC Gen 2</strong></td><td>@GC.CollectionCount(2)</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">Zmienne srodowiskowe</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr><td><strong>ASPNETCORE_ENVIRONMENT</strong></td><td>@(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "N/A")</td></tr>
+                    <tr><td><strong>PORT</strong></td><td>@(Environment.GetEnvironmentVariable("PORT") ?? "N/A")</td></tr>
+                    <tr><td><strong>RAILWAY_ENVIRONMENT</strong></td><td>@(Environment.GetEnvironmentVariable("RAILWAY_ENVIRONMENT") ?? "N/A")</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info mt-3">
+    <strong>Dlaczego to dziala tylko w Blazor Server?</strong>
+    <p class="mb-0">
+        Blazor Server uruchamia kod C# na serwerze, wiec ma dostep do systemu operacyjnego,
+        plikow, baz danych, i zasobow serwera. Blazor WASM dziala w przegladarce i nie ma
+        takiego dostepu.
+    </p>
+</div>
+
+@code {
+    private DateTime currentTime = DateTime.Now;
+    private System.Threading.Timer? timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new System.Threading.Timer(_ =>
+        {
+            currentTime = DateTime.Now;
+            InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

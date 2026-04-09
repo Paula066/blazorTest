@@ -1,15 +1,15 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
+@using System.Text.Json
 
 <PageTitle>Prognoza pogody</PageTitle>
 
 <h1>Prognoza pogody</h1>
 
-<p>Ten komponent pokazuje jak pobierać dane z API (w tym przypadku z lokalnego pliku JSON).</p>
+<p>Ten komponent pobiera dane bezposrednio z serwera (bez HTTP - to sila Blazor Server!).</p>
 
 @if (forecasts == null)
 {
-    <p><em>Ładowanie danych...</em></p>
+    <p><em>Ladowanie danych...</em></p>
 }
 else
 {
@@ -27,17 +27,17 @@ else
             {
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC°C</td>
-                    <td>@forecast.TemperatureF°F</td>
+                    <td>@(forecast.TemperatureC)@("\u00B0")C</td>
+                    <td>@(32 + (int)(forecast.TemperatureC / 0.5556))@("\u00B0")F</td>
                     <td>@forecast.Summary</td>
                 </tr>
             }
         </tbody>
     </table>
-    
+
     <div class="alert alert-info mt-3">
-        <strong>Wskazówka:</strong> W prawdziwej aplikacji możesz zamienić 
-        <code>sample-data/weather.json</code> na URL zewnętrznego API.
+        <strong>Wskazowka:</strong> W Blazor Server mozesz bezposrednio korzystac z bazy danych
+        (Entity Framework, Dapper) bez potrzeby tworzenia API!
     </div>
 }
 
@@ -46,17 +46,23 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        await Task.Delay(100);
+
+        var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sample-data", "weather.json");
+        if (File.Exists(jsonPath))
+        {
+            var json = await File.ReadAllTextAsync(jsonPath);
+            forecasts = JsonSerializer.Deserialize<WeatherForecast[]>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        }
     }
 
     public class WeatherForecast
     {
-        public DateOnly Date { get; set; }
-
+        public DateTime Date { get; set; }
         public int TemperatureC { get; set; }
-
         public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }

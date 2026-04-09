@@ -1,0 +1,10 @@
+bin/
+obj/
+output/
+.git/
+.github/
+.vs/
+.vscode/
+.vercel/
+*.md
+.DS_Store
