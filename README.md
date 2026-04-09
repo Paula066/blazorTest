@@ -2,6 +2,8 @@
 
 Aplikacja Blazor WebAssembly gotowa do wdrożenia na Vercel.
 
+> **⚠️ WAŻNE:** Jeśli masz problemy z deployment na Vercel (404 error), zobacz: **[FIX_VERCEL.md](FIX_VERCEL.md)**
+
 ## 🚀 Cechy
 
 - ✅ Blazor WebAssembly (.NET 7)
